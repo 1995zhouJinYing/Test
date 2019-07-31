@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cmn-Hans">
+    <meta charset="UTF-8">
+    <title>DSBridge Test</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=0.5,user-scalable=no"/>
+<!--        require dsbridge init js-->
+    <script src="https://unpkg.com/dsbridge/dist/dsbridge.js"> </script>
+</head>
+<style>
+    .btn {
+        text-align: center;
+        background: #eee;
+        color: #000;
+        padding: 20px;
+        margin: 30px;
+        font-size: 24px;
+        border-radius: 4px;
+        box-shadow: 4px 2px 10px #999;
+    }
+
+    .btn:active {
+        opacity: .7;
+        box-shadow: 4px 2px 10px #555;
+    }
+</style>
+<body>
+    <div class="btn" onclick="commonnavigateToVC()">common.navigationSyn</div>
+    <div class="btn" onclick="closeSyn()">common.closeSyn</div>
+    <div class="btn" onclick="asynMethod()">common.asynMethod</div>
+    <div class="btn" onclick="asynMethodParamater()">common.asynMethodParam</div>
+    <div class="btn" onclick="share()">NIODoBridge.分享</div>
+    <div class="btn" onclick="pay()">NIODoBridge.支付</div>
+    <div class="btn" onclick="showImagesPreview()">NIODoBridge.图片预览</div>
+    <div class="btn" onclick="showToast()">common.toast</div>
+    <div class="btn" onclick="showLoading()">common.showLoading</div>
+    <div class="btn" onclick="hideLoading()">common.hideLoading</div>
+    <div class="btn" onclick="disableWebviewPull()">common.禁止页面下拉</div>
+    <div class="btn" onclick="enableWebviewPull()">common.开启页面下拉</div>
+    <div class="btn" onclick="openLoginPage()">NIODoBridge.调原生登录页面</div>
+    <div class="btn" onclick="closeaaaa()">common.closeSyn</div>
+    <div class="btn" onclick="openAndClose()">openAndClose</div>
+    <div class="btn" onclick="headerSetOption()">common.headerSetOption</div>
+    <div class="btn" onclick="headerSetOption2222()">common.headerSetOption2222</div>
+    <div class="btn" onclick="closeKeyboard()">common.关闭软键盘</div>
+    <div class="btn" onclick="allowsBackForwardNavigationGestures()">common.打开侧滑</div>
+    <div class="btn" onclick="disableBackForwardNavigationGestures()">common.关闭侧滑</div>
+    <div class="btn" onclick="makeCall()">common.拨打电话</div>
+    <div class="btn" onclick="isShowPullRefresh()">common.是否显示下拉刷新</div>
+    <div class="btn" onclick="getCopyText()">common.复制字符串到剪贴板</div>
+    <div class="btn" onclick="postNotificationFromHtmltoNative()">common.通用发通知</div>
+    <div class="btn" onclick="getOSInfo()">common.getOSInfo</div>
+    <div class="btn" onclick="getAppInfo()">common.getAppInfo</div>
+    <div class="btn" onclick="getUserInfo()">common.getUserInfo</div>
+    <div class="btn" onclick="getVhiclePkgVersion()">NIODoBridge.getVhiclePkgVersion</div>
+    <a href="tel:400-999-6699">400-0000-688</a >
+    <div class="btn" onclick="createInvoice()">NIODoBridge.开具发票</div>
+    <div class="btn" onclick="invoiceDetail()">NIODoBridge.发票详情</div>
+    <div class="btn" onclick="queryInvoiceInfo()">NIODoBridge.发票信息查询</div>
+    <input type="text" value="" id="textId">
+    <script>
+
+        window.onload =function(){
+
+<!--            alert(dsBridge.call("NIODoBridge.getVinCode", ""))-->
+
+        }
+    
+    function createInvoice() {
+        dsBridge.call("NIODoBridge.createInvoice", function (v) {
+                      alert(v)
+                      })
+    }
+    
+    
+    function invoiceDetail() {
+        dsBridge.call("NIODoBridge.invoiceDetail", "801201901231244240090", function (v) {
+                      alert(v)
+        })
+    }
+    
+    function queryInvoiceInfo() {
+        dsBridge.call("NIODoBridge.queryInvoiceInfo", function (v) {
+                      alert(v)
+                      })
+    }
+
+    function closeaaaa() {
+        dsBridge.call("common.closeSyn", "")
+    }
+
+    function openAndClose() {
+        var url = "nio://fd.webview?url=https%3a%2f%2fwww.baidu.com"
+        dsBridge.call("NIODoBridge.openURL", url)
+        dsBridge.call("common.closeSyn", "")
+    }
+
+
+    function commonnavigateToVC() {
+        alert(dsBridge.call("common.navigationSyn", "testSyn")) ;
+    }
+
+    function closeSyn(){
+        setTimeout(function(){ alert("Hello"); }, 1000);
+    }
+
+    function asynMethod(){
+        dsBridge.call("common.testNoArgAsyn", function (v) {
+                      alert(v)
+                      });
+    }
+
+    function asynMethodParamater(){
+        dsBridge.call("common.testNoArgAsynParam","test1111", function (v) {
+                      alert(v)
+                      });
+    }
+
+    function share(){
+        var shareData = {
+            title: "title",
+            subtitle: "subtitle",
+            imgUrl: "imgUrl",
+            urlScheme: "urlScheme",
+            type: ["timeline", "wx", "nio"]
+        }
+        dsBridge.call("NIODoBridge.share", shareData,function (data) {
+                      alert(data)
+                      })
+    }
+
+    function getAccountID(){
+<!--        alert(dsBridge.call("NIODoBridge.getAccountID", ""))-->
+    }
+
+    function pay(){
+        let shareData = {
+            userID: "title",
+            amount: "subtitle",
+            orderNO: "imgUrl",
+            subject: "urlScheme",
+            body: "body",
+            businessType: "vom"
+        }
+        dsBridge.call("NIODoBridge.pay", shareData, function(string){
+                      <!--                        alert(string)-->
+
+                      dsBridge.call("NIODoBridge.closePayPages", shareData)
+                      })
+    }
+
+    dsBridge.register("receiveNoti", function (l) {
+        console.log(l)
+    })
+
+    dsBridge.register("onTitle", function (l, r) {
+                      alert("onTitle")
+                      })
+
+                      dsBridge.register("onCustom", function (l, r) {
+                                        alert("onCustom")
+                                        })
+    function headerSetOption() {
+        dsBridge.call("common.headerSetOption", {
+                      title: {
+                      text: 'myTitlexxxxx',
+                      color: '#2bbd96',
+                      icon: {
+                      url: 'https://source.niohome.com/UserPicture/donghai.yao.jpg?t=1545117068506',
+                      position: 'left'
+                      },
+                      callback: 'titleClick'
+                      },
+                      rightColumn: [{
+                                    text: null,
+                                    color: '#2bbd96',
+                                    icon: {
+                                    position: "right", // left right
+                                    url: "https://www.kavo.co.jp/wp-content/themes/twentyeleven3/image/icon_facebook.jpg"
+                                    },
+                                    callback: "share"
+                                    }, {
+                                    text: "关注",
+                                    color: '#2bbd96',
+                                    icon: {
+                                    position: "right", // left right
+                                    url: null
+                                    },
+                                    callback: "share"
+                                    }],
+                      leftColumn: [{
+                                   text: "红包",
+                                   color: '#2bbd96',
+                                   icon: {
+                                   position: "left", // left right
+                                   url: "https://www.kavo.co.jp/wp-content/themes/twentyeleven3/image/icon_facebook.jpg"
+                                   },
+                                   callback: "hongbao"
+                                   }]
+                      })
+    }
+
+    function headerSetOption2222() {
+        var headerModel = {
+            title:{
+                text: "标题",
+                textColor: "AA00AA",
+                icon:{
+                    position:"left",
+                    url: null
+                },
+                callback: "onTitle"
+            },
+            leftColumn: null,
+            rightColumn: [{
+                          text: "标题",
+                          textColor: "AAAAAA",
+                          icon: null,
+                          callback:"onCustom"
+                          },{
+                          text: "标题",
+                          textColor: "AAAAAA",
+                          icon:{
+                          position:"right", // left right
+                          url:"https://www.kavo.co.jp/wp-content/themes/twentyeleven3/image/icon_facebook.jpg"
+                          },
+                          callback:"onCustom"
+                          }]
+        }
+        dsBridge.call("common.headerSetOption", headerModel)
+    }
+
+    dsBridge.register("onPressBackSyn", function (l, r) {
+                      alert("get it !!!")
+                      })
+
+
+      function showImagesPreview() {
+          let dict = {
+              images: ["https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544530799687&di=c84047a2d010acbed4f6042e133ef324&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20160831%2F99c25d4e319f4634bc985340f7fee3dd_th.jpg","https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544530799687&di=dbe4ae81c260213a7b564ecd52f17470&imgtype=0&src=http%3A%2F%2Fimg.alicdn.com%2Fi1%2FTB2uy9RppXXXXX5XXXXXXXXXXXX_%2521%2521660595271.jpeg"],
+              index: 2
+          }
+          dsBridge.call("NIODoBridge.showImagesPreview", dict)
+      }
+
+    function showToast() {
+        let dict = {"content": "显示消息"}
+        dsBridge.call("common.showToast", dict)
+    }
+
+    function showLoading() {
+        dsBridge.call("NIODoBridge.showLoading", "")
+        setTimeout(function(){ hideLoading(); }, 1000);
+    }
+
+    function hideLoading() {
+        dsBridge.call("NIODoBridge.hideLoading", "")
+    }
+
+    function disableWebviewPull() {
+        dsBridge.call("common.disableWebviewPull", "")
+    }
+
+    function enableWebviewPull() {
+        dsBridge.call("common.enableWebviewPull", "")
+    }
+
+    function openLoginPage() {
+        dsBridge.call("NIODoBridge.openLoginPage", "", function(data){
+                      alert(data);
+                      })
+    }
+
+    function closeKeyboard() {
+        dsBridge.call("common.closeKeyboard", "")
+    }
+
+    function allowsBackForwardNavigationGestures() {
+        dsBridge.call("common.allowsBackForwardNavigationGestures", "")
+    }
+
+    function disableBackForwardNavigationGestures() {
+        dsBridge.call("common.disableBackForwardNavigationGestures", "")
+    }
+
+    function getCopyText() {
+        dsBridge.call("common.getCopyText", "123")
+    }
+
+    function makeCall() {
+        dsBridge.call("common.makeCall", "400-999-6699")
+    }
+
+    function isShowPullRefresh() {
+        dsBridge.call("common.isShowPullRefresh", "1")
+        setTimeout(function(){endWebViewRefresh()},5000);
+    }
+
+    function postNotificationFromHtmltoNative() {
+        let dict1 = {
+            images: "test",
+            index: 2
+        }
+        let dict = {
+            key: "KtNotificationName",
+            data:dict1
+        }
+        dsBridge.call("common.postNotificationFromHtmltoNative", dict)
+    }
+
+    function getOSInfo() {
+        let dic = dsBridge.call("common.getOSInfo", "")
+        alert(JSON.stringify(dic))
+    }
+
+    function getAppInfo() {
+        let dic = dsBridge.call("common.getAppInfo", "")
+        alert(JSON.stringify(dic))
+    }
+
+    function getUserInfo() {
+        let dic = dsBridge.call("common.getUserInfo", "")
+        alert(JSON.stringify(dic))
+    }
+    
+    function getVhiclePkgVersion() {
+        let dic = dsBridge.call("NIODoBridge.getVhiclePkgVersion", "")
+        alert(JSON.stringify(dic))
+    }
+
+    dsBridge.registerAsyn('sendHtmlPullRefreshNotification',function(responseCallback){
+                                         responseCallback(false)
+                          })
+
+    dsBridge.register('onPressBackSyn', function (l, r) {
+                      alert("get it !!!")
+
+                      })
+        </script>
+</body>
+</html>
